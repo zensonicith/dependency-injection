@@ -1,12 +1,14 @@
 ﻿using DI.Core;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
-HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
+var services = new DiServiceCollection();
 
-builder.Services.AddSingleton<IMiniContainer,MiniContainer>();
-builder.Services.AddTransient<IMiniContainer,MiniContainer>();
+services.RegisterSingleton<RandomGuidGenerator>();
+services.RegisterTransient<RandomGuidGenerator>();
 
-using IHost host = builder.Build();
+var container = services.GenerateContainer();
 
+var serviceFirst = container.GetService<RandomGuidGenerator>();
+var serviceSecond = container.GetService<RandomGuidGenerator>();
+
+System.Console.WriteLine(serviceFirst.RandomGuid);
+System.Console.WriteLine(serviceSecond.RandomGuid);
