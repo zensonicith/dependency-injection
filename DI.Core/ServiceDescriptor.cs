@@ -3,6 +3,7 @@ namespace DI.Core
     public class ServiceDescriptor
     {
         public Type ServiceType { get; } //* Xác định service
+        public Type ImplementationType { get; } //* Xác định implementation
         public object Implementation { get; internal set; } //* Instance hiện tại (cho Singleton)
         public ServiceLifetime Lifetime { get; } //* Lifetime cho service
 
@@ -18,6 +19,13 @@ namespace DI.Core
         public ServiceDescriptor(Type serviceType, ServiceLifetime lifetime)
         {
             ServiceType = serviceType;
+            Lifetime = lifetime;
+        }
+
+        public ServiceDescriptor(Type serviceType, Type implementationType, ServiceLifetime lifetime)
+        {
+            ServiceType = serviceType;
+            ImplementationType = implementationType;
             Lifetime = lifetime;
         }
     }
